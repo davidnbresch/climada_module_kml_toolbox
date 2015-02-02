@@ -2,7 +2,7 @@
 toolbox to write kml/kmz files for GoogleEarth
 =========================
 
-KML Toolbox v2.7 downloaded from http://www.mathworks.com/matlabcentral/fileexchange/34694-kml-toolbox-v2-7 (see license below) and made specific changes were to the functions contourf.m and point.m.
+KML Toolbox v2.7 downloaded from http://www.mathworks.com/matlabcentral/fileexchange/34694-kml-toolbox-v2-7 (see license below) and made specific changes to the functions contourf.m and point.m.
 
 
 
