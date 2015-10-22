@@ -168,7 +168,8 @@ function target = contourf(this,long,lat,alt,varargin)
     end
     
     
-    levelsCMAP  = linspace(min(levels),max(levels),ncolors+1);
+    %levelsCMAP  = linspace(min(levels),max(levels),ncolors+1);
+    levelsCMAP  = linspace(min(levels),max(levels),ncolors);
     middleLevel = levels(ceil(numel(levels)/2));
     
     
@@ -197,7 +198,8 @@ function target = contourf(this,long,lat,alt,varargin)
                 end
 
                 if numel(levels) > 1
-                    iC = floor(interp1(levelsCMAP,linspace(0,ncolors,numel(levelsCMAP)),clev,'linear',0));
+                    iC = floor(interp1(levelsCMAP,linspace(0,ncolors-1,numel(levelsCMAP)),clev,'linear',0));
+                    %iC = floor(interp1(levelsCMAP,linspace(0,ncolors,numel(levelsCMAP)),clev,'linear',0));
                     %lea mueller, 20150129, omitted -1 in linspace
                     %linspace(0,ncolors-1,numel(levelsCMAP))
                 else
