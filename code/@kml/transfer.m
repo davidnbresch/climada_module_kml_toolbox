@@ -1,4 +1,4 @@
-function target = transfer(this,axisHandle,varargin)
+function target = transfer(this,axisHandle,offset,varargin)
 %KML.TRANSFER(ax) Transfer the axis from the handle ax to the KML as an overlay.
 %  Example:
 %  k = kml;
@@ -12,6 +12,7 @@ function target = transfer(this,axisHandle,varargin)
 % 
 %   Copyright 2012 Rafael Fernandes de Oliveira (rafael@rafael.aero)
 %   $Revision: 2.3 $  $Date: 2012/09/05 08:00:00 $
+%   Jacob Anz, j.anz@gmx.net, 20151109 added offset as varargin
 
     p = inputParser;
     
@@ -22,7 +23,7 @@ function target = transfer(this,axisHandle,varargin)
     p.addParamValue('inPlace',false,@islogical);
     p.addParamValue('blurRadius',0,@(a)isnumeric(a) &&~isempty(a) && numel(a)==1);
     p.addParamValue('blurSigma',1,@(a)isnumeric(a) &&~isempty(a) && numel(a)==1);
-    p.addParamValue('resizeFactor',1,@(a)isnumeric(a) &&~isempty(a) && numel(a)==1);
+    p.addParamValue('resizeFactor',3,@(a)isnumeric(a) &&~isempty(a) && numel(a)==1);
     
     p.addParamValue('id',kml.getTempID('kml_overlay'),@ischar);
     p.addParamValue('name','kml_overlay',@ischar);
@@ -31,7 +32,7 @@ function target = transfer(this,axisHandle,varargin)
     p.addParamValue('viewBoundScale',1,@(a)isnumeric(a) && numel(a)==1);
     p.addParamValue('color','FFFFFFFF',@(a)ischar(a) && numel(a)==8);
     p.addParamValue('altitude',1,@(a)isnumeric(a) &&~isempty(a) && numel(a)==1);
-    p.addParamValue('rotation',0,@(a)isnumeric(a) &&~isempty(a) && numel(a)==1);
+    p.addParamValue('rotation',1,@(a)isnumeric(a) &&~isempty(a) && numel(a)==1);           %rotation (-5)
     p.addParamValue('drawOrder',0,@(a)isnumeric(a) &&~isempty(a) && numel(a)==1);
     p.addParamValue('altitudeMode','clampToGround',@(a)ismember(a,{'clampToGround','absolute'}));
     
@@ -40,6 +41,8 @@ function target = transfer(this,axisHandle,varargin)
     p.addParamValue('timeSpanEnd','',@ischar);    
     
     p.parse(axisHandle,varargin{:});
+    
+    %p.addParamValue('keepAxis',true,@islogical);
     
     arg = p.Results;
     
@@ -78,32 +81,49 @@ function target = transfer(this,axisHandle,varargin)
     end
     
     [west,east,south,north] = deal(xlim(1),xlim(2),ylim(1),ylim(2));    
-    if ~arg.keepAxis
-        axis(axtmp,'off')
-
-        set(axtmp,'XTick',[],'YTick',[],'ZTick',[])
-        set(get(axtmp,'XLabel'),'Visible','off');
-        set(get(axtmp,'YLabel'),'Visible','off');
-        set(get(axtmp,'ZLabel'),'Visible','off');
-        
-        tightInset = get(axtmp, 'TightInset');
-        position(1) = tightInset(1);
-        position(2) = tightInset(2);
-        position(3) = 1 - tightInset(1) - tightInset(3);
-        position(4) = 1 - tightInset(2) - tightInset(4);
-        set(axtmp, 'Position', position);
+  
+    if exist('offset','var')
+        west=west-offset.west;          %-0.035
+        east=east+offset.east;          %+0.03
+        south=south-offset.south;       %-0.00
+        north=north-offset.north;       %-0.00
     else
-        p = get(axtmp, 'Position');
-        
-        longSpan = abs(west-east);
-        latSpan = abs(south-north);
-        west  = west - (longSpan/p(3)) *p(1);
-        east  = east +  (longSpan/p(3))*(1-p(3)-p(1));
-        south = south -  (latSpan/p(4))*p(2);
-        north = north + (latSpan/p(4))*(1-p(4)-p(2));
+        if ~arg.keepAxis                                                        %disable the entire term
+            axis(axtmp,'off')
+
+            set(axtmp,'XTick',[],'YTick',[],'ZTick',[])
+            set(get(axtmp,'XLabel'),'Visible','off');
+            set(get(axtmp,'YLabel'),'Visible','off');
+            set(get(axtmp,'ZLabel'),'Visible','off');
+
+            tightInset = get(axtmp, 'TightInset');
+            position(1) = tightInset(1);
+            position(2) = tightInset(2);
+            position(3) = 1 - tightInset(1) - tightInset(3);
+            position(4) = 1 - tightInset(2) - tightInset(4);
+            set(axtmp, 'Position', position);                                   %this makes a problem, to small values
+        else
+            p = get(axtmp, 'Position');
+
+            longSpan = abs(west-east);
+            latSpan = abs(south-north);
+            west  = west - (longSpan/p(3)) *p(1);
+            east  = east +  (longSpan/p(3))*(1-p(3)-p(1));
+            south = south -  (latSpan/p(4))*p(2);
+            north = north + (latSpan/p(4))*(1-p(4)-p(2));
+        end
     end
     
-    saveas(ftmp, name);    
+
+%Manual correction for position fine tuning
+% west=west-0.035;
+% east=east+0.03;
+% south=south-0.00;
+% north=north-0.00;
+
+
+    
+    saveas(ftmp, name);             %wird gespeichert und wieder eingelesen
     
     %Remove a line of 3 pixels that MATLAB adds when saving the figure...
     %MUST CHECK if this holds always or not
