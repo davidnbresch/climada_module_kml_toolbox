@@ -13,6 +13,7 @@ function target = transfer(this,axisHandle,offset,varargin)
 %   Copyright 2012 Rafael Fernandes de Oliveira (rafael@rafael.aero)
 %   $Revision: 2.3 $  $Date: 2012/09/05 08:00:00 $
 %   Jacob Anz, j.anz@gmx.net, 20151109 added offset as varargin
+%-
 
     p = inputParser;
     

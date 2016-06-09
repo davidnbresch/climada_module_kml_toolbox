@@ -1,3 +1,7 @@
+%
+% no documenatation, see code
+%-
+
 time = linspace(0,4*pi,1000);
 longitude = cos(time)*1;
 latitude = sin(time)*1;

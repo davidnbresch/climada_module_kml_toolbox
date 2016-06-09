@@ -1,5 +1,6 @@
 function b = bitslice(a,lowbit,highbit)
 %BITSLICE(A,LOWBIT,HIGHBIT)
+%-
 
 numbits = highbit - lowbit + 1;
 b = bitshift(a,-lowbit);

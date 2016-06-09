@@ -4,7 +4,7 @@ classdef kmlAnimation < handle
 %    
 %   Copyright 2013 Rafael Fernandes de Oliveira (rafael@rafael.aero)
 %   $Revision: 2.6 $  $Date: 2013/05/17 17:17:17 $
-   
+%-
     properties
       kml 
       name

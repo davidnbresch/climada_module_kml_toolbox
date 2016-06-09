@@ -6,7 +6,7 @@ function  iconURL = parseIconURL(iconAlias)
 %
 %   Copyright 2012 Rafael Fernandes de Oliveira (rafael@rafael.aero)
 %   $Revision: 2.3 $  $Date: 2012/09/05 08:00:00 $
-    
+%-
     
     persistent allURLs alias
     

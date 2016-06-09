@@ -1,6 +1,6 @@
 function f = newFolder(this,foldername)
 %KML.NEWFOLDER(folderName) Creates a folder inside an kml (or another folder).
-%  The folder behaves exactly as a KML object. 
+%  The folder behaves exactly as a KML object.
 %  Example of use:
 %  k = kml;
 %  f = kml.createFolder('My Folder');
@@ -10,9 +10,10 @@ function f = newFolder(this,foldername)
 %
 %   Copyright 2012 Rafael Fernandes de Oliveira (rafael@rafael.aero)
 %   $Revision: 2.3 $  $Date: 2012/09/05 08:00:00 $
+%-
 
-    if nargin < 2
-        foldername = 'Unnamed Folder';
-    end
-    f = kml(foldername,this);
+if nargin < 2
+    foldername = 'Unnamed Folder';
+end
+f = kml(foldername,this);
 end

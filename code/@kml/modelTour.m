@@ -9,7 +9,8 @@ function modelTour(this,time,long,lat,alt,heading,tilt,roll,varargin)
 %
 %   Copyright 2012 Rafael Fernandes de Oliveira (rafael@rafael.aero)
 %   $Revision: 2.3 $  $Date: 2012/09/05 08:00:00 $
-    
+%-
+
     [long,lat,heading,tilt,roll] = this.checkUnit(long,lat,heading,tilt,roll);
     
     p = inputParser;

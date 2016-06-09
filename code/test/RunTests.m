@@ -1,4 +1,4 @@
-%% create a KML toolbox object
+edit climada_centroids_distance_to_coast%% create a KML toolbox object
 k = kml('kml toolbox tests'); %create an kmltoolbox object
 
 %% plot
@@ -24,7 +24,7 @@ f = k.createFolder('kml.poly');
 % end
 
 tp = linspace(0,360,20);
-cities = load('cities.mat'); %Population Data Copyright notice: © by Stefan Helders www.world-gazetteer.com
+cities = load('cities.mat'); %Population Data Copyright notice: ? by Stefan Helders www.world-gazetteer.com
 cities = cities.cities;
 
 cmap = jet(20);
@@ -92,7 +92,7 @@ f.scatter3(360*rand(100,1)-180,180*rand(100,1)-90,linspace(5,10,100).','iconScal
 f = k.createFolder('kml.text');
 for lat = -80:20:80
     for long = -180:20:170
-        f.text(long,lat,1e5,sprintf('Lat %g° Long %g°',lat,long),'labelScale',3)
+        f.text(long,lat,1e5,sprintf('Lat %g? Long %g?',lat,long),'labelScale',3)
     end
 end
 

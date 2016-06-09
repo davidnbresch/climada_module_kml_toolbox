@@ -1,3 +1,7 @@
+%
+% no documenatation, see code
+%-
+
 k = kml('Model Tour');
 f = k.createFolder('Above');
 t = linspace(0,4*pi,1000);

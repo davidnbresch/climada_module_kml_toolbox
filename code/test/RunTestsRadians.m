@@ -1,3 +1,7 @@
+%
+% no documenatation, see code
+%-
+
 %% create a KML toolbox object
 k = kml('kml toolbox tests using radians'); %create an kmltoolbox object
 k.useRadians;
@@ -24,7 +28,7 @@ f = k.createFolder('kml.poly');
 % end
 
 tp = linspace(0,2*pi,20);
-cities = load('cities.mat'); %Population Data Copyright notice: © by Stefan Helders www.world-gazetteer.com
+cities = load('cities.mat'); %Population Data Copyright notice: ? by Stefan Helders www.world-gazetteer.com
 cities = cities.cities;
 
 cmap = jet(20);
@@ -93,7 +97,7 @@ f.scatter3(2*pi*rand(100,1)-pi,pi*rand(100,1)-pi/2,linspace(5,10,100).','iconSca
 f = k.createFolder('kml.text');
 for lat = -80:20:80
     for long = -180:20:170
-        f.text(long*pi/180,lat*pi/180,1e5,sprintf('Lat %g° Long %g°',lat,long),'labelScale',3);
+        f.text(long*pi/180,lat*pi/180,1e5,sprintf('Lat %g? Long %g?',lat,long),'labelScale',3);
     end
 end
 
